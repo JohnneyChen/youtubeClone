@@ -2,6 +2,7 @@ import { render } from '@testing-library/react'
 import React from 'react'
 import unsplashSearch from '../requests/unsplashSearch'
 import SearchBar from './SearchBar'
+import ImageList from './ImageList'
 
 class App extends React.Component {
     state = { data: [] }
@@ -14,7 +15,7 @@ class App extends React.Component {
         return (
             <div className="ui container" style={{ marginTop: '10px' }}>
                 <SearchBar onSubmit={this.onSearchSubmit} />
-                <p>Photo count: {this.state.data.length}</p>
+                <ImageList data={this.state.data} />
             </div>
 
         )
