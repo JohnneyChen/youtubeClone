@@ -1,24 +1,52 @@
-import { render } from '@testing-library/react'
 import React from 'react'
-import unsplashSearch from '../requests/unsplashSearch'
-import SearchBar from './SearchBar'
-import ImageList from './ImageList'
+import Searchbar from './Searchbar'
+import VideoList from './VideoList'
+import youtube from '../Api/youtube'
+import Megatron from './Megatron'
+const KEY = 'AIzaSyC5VoyVt2Q-LLk7JyzluwWKXx5k1kdn3do'
 
 class App extends React.Component {
-    state = { data: [] }
-    onSearchSubmit = async (term) => {
-        const photos = await unsplashSearch(term)
-        this.setState({ data: photos.data.results })
+    state = { youtubeData: [], display: null }
+
+    onSearchSubmit = async (query) => {
+        const youtubeData = await youtube.get('/search', {
+            params: {
+                key: KEY,
+                maxResults: 5,
+                part: 'Snippet',
+                q: query
+            }
+        })
+        this.setState({ youtubeData: youtubeData.data.items })
+        console.log(this.state.youtubeData)
+    }
+
+    onListClick = (data) => {
+        this.setState({ display: data })
+    }
+
+    renderHelper = () => {
+        if (this.state.display) {
+            return (
+                <div className="ui container" style={{ marginTop: '10px' }}>
+                    < Searchbar placeholder="search..." onSearchSubmit={this.onSearchSubmit} />
+                    <Megatron data={this.state.display} />
+                    <VideoList youtubeData={this.state.youtubeData} onListClick={this.onListClick}></VideoList>
+                </div>
+            )
+        } else {
+            return (
+                <div className="ui container" style={{ marginTop: '10px' }}>
+                    <Searchbar placeholder="search..." onSearchSubmit={this.onSearchSubmit} />
+                    <VideoList youtubeData={this.state.youtubeData} onListClick={this.onListClick}></VideoList>
+                </div>
+            )
+        }
     }
 
     render() {
-        return (
-            <div className="ui container" style={{ marginTop: '10px' }}>
-                <SearchBar onSubmit={this.onSearchSubmit} />
-                <ImageList data={this.state.data} />
-            </div>
-
-        )
+        const toRender = this.renderHelper()
+        return toRender
     }
 }
 export default App
