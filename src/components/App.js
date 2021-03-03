@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import Searchbar from './Searchbar'
-import VideoList from './VideoList'
-import youtube from '../Api/youtube'
-import Megatron from './Megatron'
+import Searchbar from './Searchbar.js'
+import VideoList from './VideoList.js'
+import youtube from '../Api/youtube.js'
+import Megatron from './Megatron.js'
 const KEY = 'AIzaSyC5VoyVt2Q-LLk7JyzluwWKXx5k1kdn3do'
 
 const App = () => {
