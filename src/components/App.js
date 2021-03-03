@@ -40,7 +40,7 @@ const App = () => {
         } else {
             return (
                 <div className="ui container" style={{ marginTop: '10px' }}>
-                    <Searchbar placeholder="search..." onSearchSubmit={onSearchSubmit} />
+                    <Searchbar placeholder="Type in your search terms and enter..." onSearchSubmit={onSearchSubmit} />
                     <VideoList youtubeData={youtubeData} onListClick={onListClick}></VideoList>
                 </div>
             )
